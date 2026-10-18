@@ -33,21 +33,32 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleFields(artSec, ['Artistic Single', 'Artistic Pair', 'Rhythmic Pair'].includes(val));
     });
 
-    // Image Preview Logic
-    document.getElementById('imageFile').addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        const previewBox = document.getElementById('previewBox');
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (evt) => {
-                document.getElementById('imagePreview').src = evt.target.result;
-                previewBox.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-        } else {
-            previewBox.style.display = 'none';
+    // Setup Preview Handler Helper Function
+    function setupImagePreview(inputId, previewBoxId, previewImgId) {
+        const inputEl = document.getElementById(inputId);
+        const boxEl = document.getElementById(previewBoxId);
+        const imgEl = document.getElementById(previewImgId);
+
+        if (inputEl) {
+            inputEl.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                        imgEl.src = evt.target.result;
+                        boxEl.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    boxEl.style.display = 'none';
+                }
+            });
         }
-    });
+    }
+
+    // Initialize both upload previews independently
+    setupImagePreview('photoFile', 'photoPreviewBox', 'photoPreview');
+    setupImagePreview('receiptFile', 'receiptPreviewBox', 'receiptPreview');
 
     // Form Submit handling (Loader & Toast)
     document.getElementById('registrationForm').addEventListener('submit', (e) => {
@@ -67,10 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
             spinner.style.display = 'none';
             txt.textContent = 'Submit Registration';
             toast.style.display = 'block';
+            
+            // Reset Form fields
             e.target.reset();
-            document.getElementById('previewBox').style.display = 'none';
+            
+            // Hide conditional sections and preview boxes
+            document.getElementById('photoPreviewBox').style.display = 'none';
+            document.getElementById('receiptPreviewBox').style.display = 'none';
             tradSec.style.display = 'none';
             artSec.style.display = 'none';
+            
             toast.scrollIntoView({ behavior: 'smooth' });
         }, 2000);
     });
