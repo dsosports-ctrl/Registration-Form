@@ -67,14 +67,35 @@
                     <div class="form-group"><label for="a10">A10 *</label><select id="a10" class="asana-dropdown"></select></div>
                 </div>
 
-                <div class="form-group"><label for="driveLink">Payment Proof (Google Drive Link) *</label><input type="url" id="driveLink" required></div>
+                <!-- NEW: Candidate Photo Upload Section -->
+                <div class="form-group">
+                    <label>Upload Candidate Photo *</label>
+                    <label class="file-wrapper" for="photoFile">
+                        👤 Choose Passport Photo
+                        <input type="file" id="photoFile" accept="image/*" required>
+                    </label>
+                    <div class="preview-box" id="photoPreviewBox">
+                        <img src="" id="photoPreview" alt="Photo Preview">
+                    </div>
+                </div>
+
+                <!-- Payment Receipt Image Upload Section -->
                 <div class="form-group">
                     <label>Upload Payment Receipt Image *</label>
-                    <label class="file-wrapper" for="imageFile">Choose Image<input type="file" id="imageFile" accept="image/*" required></label>
-                    <div class="preview-box" id="previewBox"><img src="" id="imagePreview" alt="Preview"></div>
+                    <label class="file-wrapper" for="receiptFile">
+                        📸 Choose Payment Receipt
+                        <input type="file" id="receiptFile" accept="image/*" required>
+                    </label>
+                    <div class="preview-box" id="receiptPreviewBox">
+                        <img src="" id="receiptPreview" alt="Receipt Preview">
+                    </div>
                 </div>
             </div>
-            <button type="submit" class="btn-submit" id="submitBtn"><span class="spinner" id="btnSpinner"></span><span id="btnText">Submit Registration</span></button>
+            
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <span class="spinner" id="btnSpinner"></span>
+                <span id="btnText">Submit Registration</span>
+            </button>
             <div class="toast success" id="successToast">🎉 Registration Successful! Data recorded.</div>
         </form>
     </div>
